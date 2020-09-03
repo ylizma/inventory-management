@@ -2,6 +2,7 @@ package com.ylizma.stockmanagement.model;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Product extends BaseClass {
 
     @Id
@@ -22,6 +24,7 @@ public class Product extends BaseClass {
 
     private String description;
 
+    @Column(unique = true)
     private String code;
 
     private Integer minStock;

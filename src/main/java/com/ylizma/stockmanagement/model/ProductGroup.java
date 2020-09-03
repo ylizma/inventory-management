@@ -2,6 +2,7 @@ package com.ylizma.stockmanagement.model;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ProductGroup extends BaseClass {
 
     @Id
@@ -22,5 +24,6 @@ public class ProductGroup extends BaseClass {
 
     private boolean active;
 
+    @Column(unique = true)
     private String code;
 }
