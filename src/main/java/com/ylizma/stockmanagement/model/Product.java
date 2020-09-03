@@ -22,4 +22,8 @@ public class Product extends BaseClass {
 
     private String description;
 
+    private String code;
+
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private WareHouse wareHouse;
 }

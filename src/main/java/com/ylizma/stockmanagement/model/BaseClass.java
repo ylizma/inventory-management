@@ -1,16 +1,20 @@
 package com.ylizma.stockmanagement.model;
 
-import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
+@Data
+@MappedSuperclass
 public class BaseClass {
 
-    @Temporal(TemporalType.TIME)
-    private Date createDateTime;
+    @CreatedDate
+    private Date createdAt;
 
-    @Temporal(TemporalType.TIME)
-    private Date updateDateTime;
+    @LastModifiedDate
+    private Date lastModified;
 }

@@ -21,4 +21,13 @@ public class StockMovement extends BaseClass {
     private int quantity;
 
     private String description;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Product product;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private WareHouse wareHouse;
+
+    @Enumerated(EnumType.STRING)
+    private MovementType movementType;
 }
