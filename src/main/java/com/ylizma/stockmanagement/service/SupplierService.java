@@ -10,9 +10,9 @@ public interface SupplierService {
 
     List<SupplierDetails> findAll();
 
-    SupplierDetails save(SupplierDetails p);
+    ResponseEntity<Object> save(SupplierDetails p);
 
-    SupplierDetails update(SupplierDetails p,Long id);
+    ResponseEntity<Object> update(SupplierDetails p,Long id);
 
     ResponseEntity<Object> delete(Long id);
 }

@@ -2,8 +2,10 @@ package com.ylizma.stockmanagement.service.helper;
 
 import com.ylizma.stockmanagement.domain.ProductDetails;
 import com.ylizma.stockmanagement.domain.ProductGroupDetails;
+import com.ylizma.stockmanagement.domain.SupplierDetails;
 import com.ylizma.stockmanagement.model.Product;
 import com.ylizma.stockmanagement.model.ProductGroup;
+import com.ylizma.stockmanagement.model.Supplier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -46,6 +48,31 @@ public class DomainConversion {
                 .active(productGroupDetails.isActive())
                 .code(productGroupDetails.getCode())
                 .name(productGroupDetails.getName())
+                .build();
+    }
+
+    public SupplierDetails convertSupplierToSupplierDetails(Supplier supplier) {
+        return new SupplierDetails().builder()
+                .active(supplier.isActive())
+                .address(supplier.getAddress())
+                .city(supplier.getCity())
+                .companyID(supplier.getCompanyID())
+                .name(supplier.getName())
+                .fax(supplier.getFax())
+                .phone(supplier.getPhone())
+                .id(supplier.getId())
+                .build();
+    }
+
+    public Supplier convertSupplierDetailsToSupplier(SupplierDetails p) {
+         return new Supplier().builder()
+                .active(p.isActive())
+                .address(p.getAddress())
+                .city(p.getCity())
+                .companyID(p.getCompanyID())
+                .name(p.getName())
+                .fax(p.getFax())
+                .phone(p.getPhone())
                 .build();
     }
 }
