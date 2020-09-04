@@ -40,7 +40,7 @@ public class ProductGroupServiceImpl implements ProductGroupService {
 
     @Override
     public ResponseEntity<Object> save(ProductGroupDetails p) {
-        if (productGroupRepository.findProductGroupByCode(p.getCode()).isPresent()) {
+        if (!productGroupRepository.findProductGroupByCode(p.getCode()).isPresent()) {
             ProductGroup productGroup = domainConversion.convertProductGroupDetailsToProduct(p);
             productGroupRepository.save(productGroup);
             return ResponseEntity.status(HttpStatus.CREATED).body(productGroup);
@@ -55,7 +55,6 @@ public class ProductGroupServiceImpl implements ProductGroupService {
         ProductGroup managedProduct = domainConversion.convertProductGroupDetailsToProduct(p);
         if (productGroup.isPresent()) {
             productGroup.get().setName(managedProduct.getName());
-            productGroup.get().setCode(managedProduct.getCode());
             productGroup.get().setActive(managedProduct.isActive());
             productGroupRepository.save(productGroup.get());
             return ResponseEntity.status(HttpStatus.OK).body(productGroup.get());

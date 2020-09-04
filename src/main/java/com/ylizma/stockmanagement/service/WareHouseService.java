@@ -1,19 +1,19 @@
 package com.ylizma.stockmanagement.service;
 
-import com.ylizma.stockmanagement.domain.WareHouseDetails;
+import com.ylizma.stockmanagement.model.WareHouse;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface WareHouseService {
 
-    WareHouseDetails findById(Long id);
+    List<WareHouse> findAll();
 
-    List<WareHouseDetails> findAll();
+    List<WareHouse> findByName(String name);
 
-    WareHouseDetails save(WareHouseDetails p);
+    ResponseEntity<Object> save(WareHouse p);
 
-    WareHouseDetails update(WareHouseDetails p, Long id);
+    ResponseEntity<Object> update(WareHouse p, Long id);
 
     ResponseEntity<Object> delete(Long id);
 }
