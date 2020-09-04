@@ -1,23 +1,16 @@
-package com.ylizma.stockmanagement.model;
-
+package com.ylizma.stockmanagement.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-@Entity
-@Table(name = "warehouses")
-public class WareHouse extends BaseClass {
+public class WareHouseDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
@@ -25,5 +18,4 @@ public class WareHouse extends BaseClass {
     private String description;
 
     private Boolean active;
-
 }

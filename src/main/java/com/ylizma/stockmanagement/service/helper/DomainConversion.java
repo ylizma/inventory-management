@@ -3,9 +3,11 @@ package com.ylizma.stockmanagement.service.helper;
 import com.ylizma.stockmanagement.domain.ProductDetails;
 import com.ylizma.stockmanagement.domain.ProductGroupDetails;
 import com.ylizma.stockmanagement.domain.SupplierDetails;
+import com.ylizma.stockmanagement.domain.WareHouseDetails;
 import com.ylizma.stockmanagement.model.Product;
 import com.ylizma.stockmanagement.model.ProductGroup;
 import com.ylizma.stockmanagement.model.Supplier;
+import com.ylizma.stockmanagement.model.WareHouse;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -74,5 +76,21 @@ public class DomainConversion {
                 .fax(p.getFax())
                 .phone(p.getPhone())
                 .build();
+    }
+
+    public WareHouseDetails convertWareHouseToWarehousedeatils(WareHouse wareHouse){
+        return new WareHouseDetails().builder()
+                .active(wareHouse.getActive())
+                .description(wareHouse.getDescription())
+                .name(wareHouse.getName())
+                .id(wareHouse.getId()).build();
+    }
+
+      public WareHouse convertWareHouseDetailsToWarehouse(WareHouseDetails wareHouse){
+        return new WareHouse().builder()
+                .active(wareHouse.getActive())
+                .description(wareHouse.getDescription())
+                .name(wareHouse.getName())
+                .id(wareHouse.getId()).build();
     }
 }

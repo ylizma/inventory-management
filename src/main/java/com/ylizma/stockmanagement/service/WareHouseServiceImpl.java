@@ -1,37 +1,50 @@
 package com.ylizma.stockmanagement.service;
 
+import com.ylizma.stockmanagement.domain.WareHouseDetails;
 import com.ylizma.stockmanagement.model.WareHouse;
 import com.ylizma.stockmanagement.respository.WareHouseRepository;
+import com.ylizma.stockmanagement.service.helper.DomainConversion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class WareHouseServiceImpl implements WareHouseService {
 
     @Autowired
     private WareHouseRepository wareHouseRepository;
+    @Autowired
+    DomainConversion domainConversion;
 
     @Override
-    public List<WareHouse> findAll() {
-        return wareHouseRepository.findAll();
+    public List<WareHouseDetails> findAll() {
+        List<WareHouseDetails> wareHouseDetailsList = new ArrayList<>();
+        wareHouseRepository.findAll()
+                .forEach(wareHouse -> wareHouseDetailsList.add(domainConversion.convertWareHouseToWarehousedeatils(wareHouse)));
+        return wareHouseDetailsList;
     }
 
     @Override
-    public List<WareHouse> findByName(String name) {
-        return wareHouseRepository.findWareHouseByName(name);
+    public List<WareHouseDetails> findByName(String name) {
+        List<WareHouseDetails> wareHouseDetailsList = new ArrayList<>();
+        wareHouseRepository.findWareHouseByNameContains(name)
+                .forEach(wareHouse -> wareHouseDetailsList.add(domainConversion.convertWareHouseToWarehousedeatils(wareHouse)));
+        return wareHouseDetailsList;
     }
 
     @Override
-    public ResponseEntity<Object> save(WareHouse p) {
-        wareHouseRepository.save(p);
+    public ResponseEntity<Object> save(WareHouseDetails p) {
+        wareHouseRepository.save(domainConversion.convertWareHouseDetailsToWarehouse(p));
         return ResponseEntity.status(HttpStatus.CREATED).body(p);
     }
 
     @Override
-    public ResponseEntity<Object> update(WareHouse p, Long id) {
+    public ResponseEntity<Object> update(WareHouseDetails p, Long id) {
         Optional<WareHouse> wareHouse = wareHouseRepository.findById(id);
         if (wareHouse.isPresent()) {
             wareHouse.get().setName(p.getName());

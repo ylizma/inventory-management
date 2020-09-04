@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface WareHouseRepository extends JpaRepository<WareHouse,Long> {
-    List<WareHouse> findWareHouseByName(String name);
+    List<WareHouse> findWareHouseByNameContains(String name);
 
 }
