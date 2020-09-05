@@ -13,6 +13,8 @@ import java.util.Date;
 @Builder
 public class ProductGroupDetails {
 
+    Long id;
+
     String name;
 
     boolean active;

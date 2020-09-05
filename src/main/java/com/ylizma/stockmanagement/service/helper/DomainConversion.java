@@ -15,38 +15,40 @@ public class DomainConversion {
 
     public ProductDetails convertProductToDetails(Product product) {
 
-        return new ProductDetails().builder()
+        return ProductDetails.builder()
+                .id(product.getId())
                 .code(product.getCode())
                 .description(product.getDescription())
                 .name(product.getName())
                 .minStock(product.getMinStock())
-                .supplier(product.getSupplier())
-                .productGroup(product.getProductGroup())
-                .wareHouse(product.getWareHouse()).build();
+                .supplier(convertSupplierToSupplierDetails(product.getSupplier()))
+                .productGroup(convertProductGroupToProductGroupDetails(product.getProductGroup()))
+                .wareHouse(convertWareHouseToWarehousedeatils(product.getWareHouse())).build();
     }
 
     public Product convertProductDetailsToProduct(ProductDetails productDetails) {
 
-        return new Product().builder()
+        return Product.builder()
                 .code(productDetails.getCode())
                 .description(productDetails.getDescription())
                 .name(productDetails.getName())
                 .minStock(productDetails.getMinStock())
-                .supplier(productDetails.getSupplier())
-                .productGroup(productDetails.getProductGroup())
-                .wareHouse(productDetails.getWareHouse()).build();
+                .supplier(convertSupplierDetailsToSupplier(productDetails.getSupplier()))
+                .productGroup(convertProductGroupDetailsToProduct(productDetails.getProductGroup()))
+                .wareHouse(convertWareHouseDetailsToWarehouse(productDetails.getWareHouse())).build();
     }
 
     public ProductGroupDetails convertProductGroupToProductGroupDetails(ProductGroup productGroup) {
-        return new ProductGroupDetails().builder()
+        return ProductGroupDetails.builder()
                 .active(productGroup.isActive())
                 .code(productGroup.getCode())
                 .name(productGroup.getName())
+                .id(productGroup.getId())
                 .build();
     }
 
     public ProductGroup convertProductGroupDetailsToProduct(ProductGroupDetails productGroupDetails) {
-        return new ProductGroup().builder()
+        return ProductGroup.builder()
                 .active(productGroupDetails.isActive())
                 .code(productGroupDetails.getCode())
                 .name(productGroupDetails.getName())
@@ -54,7 +56,7 @@ public class DomainConversion {
     }
 
     public SupplierDetails convertSupplierToSupplierDetails(Supplier supplier) {
-        return new SupplierDetails().builder()
+        return SupplierDetails.builder()
                 .active(supplier.isActive())
                 .address(supplier.getAddress())
                 .city(supplier.getCity())
@@ -67,7 +69,7 @@ public class DomainConversion {
     }
 
     public Supplier convertSupplierDetailsToSupplier(SupplierDetails p) {
-         return new Supplier().builder()
+        return Supplier.builder()
                 .active(p.isActive())
                 .address(p.getAddress())
                 .city(p.getCity())
@@ -78,19 +80,19 @@ public class DomainConversion {
                 .build();
     }
 
-    public WareHouseDetails convertWareHouseToWarehousedeatils(WareHouse wareHouse){
-        return new WareHouseDetails().builder()
+    public WareHouseDetails convertWareHouseToWarehousedeatils(WareHouse wareHouse) {
+        return WareHouseDetails.builder()
                 .active(wareHouse.getActive())
                 .description(wareHouse.getDescription())
                 .name(wareHouse.getName())
                 .id(wareHouse.getId()).build();
     }
 
-      public WareHouse convertWareHouseDetailsToWarehouse(WareHouseDetails wareHouse){
-        return new WareHouse().builder()
+    public WareHouse convertWareHouseDetailsToWarehouse(WareHouseDetails wareHouse) {
+        return WareHouse.builder()
                 .active(wareHouse.getActive())
                 .description(wareHouse.getDescription())
                 .name(wareHouse.getName())
-                .id(wareHouse.getId()).build();
+                .build();
     }
 }

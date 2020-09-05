@@ -16,6 +16,8 @@ import java.util.Date;
 @Builder
 public class ProductDetails {
 
+     Long id;
+
      String name;
 
      String description;
@@ -24,13 +26,9 @@ public class ProductDetails {
 
      Integer minStock;
 
-     WareHouse wareHouse;
+     WareHouseDetails wareHouse;
 
-     ProductGroup productGroup;
+     ProductGroupDetails productGroup;
 
-     Supplier supplier;
-
-     Date createdAt;
-
-     Date lastModified;
+     SupplierDetails supplier;
 }

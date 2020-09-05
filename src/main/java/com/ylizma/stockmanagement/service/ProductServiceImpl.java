@@ -5,7 +5,10 @@ import com.ylizma.stockmanagement.model.Product;
 import com.ylizma.stockmanagement.model.ProductGroup;
 import com.ylizma.stockmanagement.model.Supplier;
 import com.ylizma.stockmanagement.model.WareHouse;
+import com.ylizma.stockmanagement.respository.ProductGroupRepository;
 import com.ylizma.stockmanagement.respository.ProductRepository;
+import com.ylizma.stockmanagement.respository.SupplierRepository;
+import com.ylizma.stockmanagement.respository.WareHouseRepository;
 import com.ylizma.stockmanagement.service.helper.DomainConversion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +26,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    WareHouseRepository wareHouseRepository;
+    @Autowired
+    SupplierRepository supplierRepository;
+    @Autowired
+    ProductGroupRepository productGroupRepository;
 
     @Autowired
     DomainConversion domainConversion;
@@ -45,10 +54,17 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<Object> save(ProductDetails p) {
         Optional<Product> tProduct = productRepository.findProductByCode(p.getCode());
+        Product product = domainConversion.convertProductDetailsToProduct(p);
         if (tProduct.isPresent()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("this product exist already !!");
         } else {
-            productRepository.save(domainConversion.convertProductDetailsToProduct(p));
+            Optional<WareHouse> managedWareHouse = wareHouseRepository.findById(p.getWareHouse().getId());
+            managedWareHouse.ifPresent(product::setWareHouse);
+            Optional<Supplier> managedSupplier = supplierRepository.findById(p.getSupplier().getId());
+            managedSupplier.ifPresent(product::setSupplier);
+            Optional<ProductGroup> managedProductGroup = productGroupRepository.findById(p.getProductGroup().getId());
+            managedProductGroup.ifPresent(product::setProductGroup);
+            productRepository.save(product);
             return ResponseEntity.status(HttpStatus.CREATED).body(p);
         }
     }
