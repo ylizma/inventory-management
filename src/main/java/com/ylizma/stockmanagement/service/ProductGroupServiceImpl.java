@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +43,8 @@ public class ProductGroupServiceImpl implements ProductGroupService {
     public ResponseEntity<Object> save(ProductGroupDetails p) {
         if (!productGroupRepository.findProductGroupByCode(p.getCode()).isPresent()) {
             ProductGroup productGroup = domainConversion.convertProductGroupDetailsToProduct(p);
+            productGroup.setCreatedAt(new Date());
+            productGroup.setLastModified(new Date());
             productGroupRepository.save(productGroup);
             return ResponseEntity.status(HttpStatus.CREATED).body(productGroup);
         } else {
@@ -56,6 +59,7 @@ public class ProductGroupServiceImpl implements ProductGroupService {
         if (productGroup.isPresent()) {
             productGroup.get().setName(managedProduct.getName());
             productGroup.get().setActive(managedProduct.isActive());
+            productGroup.get().setLastModified(new Date());
             productGroupRepository.save(productGroup.get());
             return ResponseEntity.status(HttpStatus.OK).body(productGroup.get());
         }

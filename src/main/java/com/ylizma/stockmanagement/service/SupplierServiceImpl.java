@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +42,8 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     public ResponseEntity<Object> save(SupplierDetails p) {
         Supplier supplier = domainConversion.convertSupplierDetailsToSupplier(p);
+        supplier.setCreatedAt(new Date());
+        supplier.setLastModified(new Date());
         supplierRepository.save(supplier);
         return ResponseEntity.status(HttpStatus.CREATED).body(supplier);
     }
@@ -57,6 +60,7 @@ public class SupplierServiceImpl implements SupplierService {
             managedSupplier.get().setAddress(unmanagedSupplier.getAddress());
             managedSupplier.get().setName(unmanagedSupplier.getName());
             managedSupplier.get().setActive(unmanagedSupplier.isActive());
+            managedSupplier.get().setLastModified(new Date());
             supplierRepository.save(managedSupplier.get());
             return ResponseEntity.status(HttpStatus.CREATED).body(managedSupplier);
         } else return ResponseEntity.status(500).body("Error");

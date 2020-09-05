@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,6 +65,8 @@ public class ProductServiceImpl implements ProductService {
             managedSupplier.ifPresent(product::setSupplier);
             Optional<ProductGroup> managedProductGroup = productGroupRepository.findById(p.getProductGroup().getId());
             managedProductGroup.ifPresent(product::setProductGroup);
+            product.setCreatedAt(new Date());
+            product.setLastModified(new Date());
             productRepository.save(product);
             return ResponseEntity.status(HttpStatus.CREATED).body(p);
         }
@@ -111,6 +114,7 @@ public class ProductServiceImpl implements ProductService {
             managedProduct.get().setCode(unmanagedProduct.getCode());
             managedProduct.get().setDescription(unmanagedProduct.getDescription());
             managedProduct.get().setMinStock(unmanagedProduct.getMinStock());
+            managedProduct.get().setLastModified(new Date());
 
             productRepository.save(managedProduct.get());
 

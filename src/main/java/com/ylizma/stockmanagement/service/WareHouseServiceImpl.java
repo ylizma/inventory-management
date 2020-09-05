@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +40,10 @@ public class WareHouseServiceImpl implements WareHouseService {
 
     @Override
     public ResponseEntity<Object> save(WareHouseDetails p) {
-        wareHouseRepository.save(domainConversion.convertWareHouseDetailsToWarehouse(p));
+        WareHouse wareHouse = domainConversion.convertWareHouseDetailsToWarehouse(p);
+        wareHouse.setCreatedAt(new Date());
+        wareHouse.setLastModified(new Date());
+        wareHouseRepository.save(wareHouse);
         return ResponseEntity.status(HttpStatus.CREATED).body(p);
     }
 
@@ -50,6 +54,7 @@ public class WareHouseServiceImpl implements WareHouseService {
             wareHouse.get().setName(p.getName());
             wareHouse.get().setDescription(p.getDescription());
             wareHouse.get().setActive(p.getActive());
+            wareHouse.get().setLastModified(new Date());
             wareHouseRepository.save(wareHouse.get());
             return ResponseEntity.status(HttpStatus.OK).body(wareHouse);
         }
