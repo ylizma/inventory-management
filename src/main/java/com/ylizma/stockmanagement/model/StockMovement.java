@@ -2,6 +2,7 @@ package com.ylizma.stockmanagement.model;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class StockMovement extends BaseClass {
 
     @Id
@@ -22,11 +24,8 @@ public class StockMovement extends BaseClass {
 
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     private Product product;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    private WareHouse wareHouse;
 
     @Enumerated(EnumType.STRING)
     private MovementType movementType;

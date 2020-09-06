@@ -4,12 +4,14 @@ import com.ylizma.stockmanagement.domain.SupplierDetails;
 import com.ylizma.stockmanagement.model.Supplier;
 import com.ylizma.stockmanagement.respository.SupplierRepository;
 import com.ylizma.stockmanagement.service.helper.DomainConversion;
+import com.ylizma.stockmanagement.util.DateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,16 +42,16 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
-    public ResponseEntity<Object> save(SupplierDetails p) {
+    public ResponseEntity<Object> save(SupplierDetails p) throws ParseException {
         Supplier supplier = domainConversion.convertSupplierDetailsToSupplier(p);
-        supplier.setCreatedAt(new Date());
-        supplier.setLastModified(new Date());
+        supplier.setCreatedAt(DateFormatter.getCurrentDate());
+        supplier.setLastModified(DateFormatter.getCurrentDate());
         supplierRepository.save(supplier);
         return ResponseEntity.status(HttpStatus.CREATED).body(supplier);
     }
 
     @Override
-    public ResponseEntity<Object> update(SupplierDetails p, Long id) {
+    public ResponseEntity<Object> update(SupplierDetails p, Long id) throws ParseException {
         Optional<Supplier> managedSupplier = supplierRepository.findById(id);
         Supplier unmanagedSupplier = domainConversion.convertSupplierDetailsToSupplier(p);
         if (managedSupplier.isPresent()) {
@@ -60,7 +62,7 @@ public class SupplierServiceImpl implements SupplierService {
             managedSupplier.get().setAddress(unmanagedSupplier.getAddress());
             managedSupplier.get().setName(unmanagedSupplier.getName());
             managedSupplier.get().setActive(unmanagedSupplier.isActive());
-            managedSupplier.get().setLastModified(new Date());
+            managedSupplier.get().setLastModified(DateFormatter.getCurrentDate());
             supplierRepository.save(managedSupplier.get());
             return ResponseEntity.status(HttpStatus.CREATED).body(managedSupplier);
         } else return ResponseEntity.status(500).body("Error");

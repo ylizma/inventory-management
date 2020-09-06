@@ -5,6 +5,8 @@ import com.ylizma.stockmanagement.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -25,7 +27,7 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> saveProduct(@RequestBody ProductDetails product) {
+    public ResponseEntity<Object> saveProduct(@RequestBody ProductDetails product) throws ParseException {
         return productService.save(product);
     }
 
@@ -37,5 +39,10 @@ public class ProductController {
     @DeleteMapping("/{code}")
     public ResponseEntity<Object> deleteProduct(@PathVariable String code) {
         return productService.delete(code);
+    }
+
+    @GetMapping("/warehouse/{id}")
+    public List<ProductDetails> findByWareHouse(@PathVariable Long id){
+        return productService.findAllByWareHouseId(id);
     }
 }

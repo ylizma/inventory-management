@@ -22,6 +22,8 @@ public class Product extends BaseClass {
 
     private String name;
 
+    private Integer quantity;
+
     private String description;
 
     @Column(unique = true)

@@ -3,6 +3,7 @@ package com.ylizma.stockmanagement.service;
 import com.ylizma.stockmanagement.domain.StockMovementDetails;
 import org.springframework.http.ResponseEntity;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface StockMovementService {
@@ -11,9 +12,9 @@ public interface StockMovementService {
 
     List<StockMovementDetails> findAll();
 
-    StockMovementDetails save(StockMovementDetails p);
+    ResponseEntity<Object> save(StockMovementDetails p) throws ParseException;
 
-    StockMovementDetails update(StockMovementDetails p, Long id);
+//    ResponseEntity<Object> update(StockMovementDetails p, Long id);
 
     ResponseEntity<Object> delete(Long id);
 }

@@ -24,8 +24,6 @@ public class StockMovementDetails {
 
      Product product;
 
-     WareHouse wareHouse;
-
      MovementType movementType;
 
      Date createdAt;

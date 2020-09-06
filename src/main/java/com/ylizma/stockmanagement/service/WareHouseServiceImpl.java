@@ -4,11 +4,13 @@ import com.ylizma.stockmanagement.domain.WareHouseDetails;
 import com.ylizma.stockmanagement.model.WareHouse;
 import com.ylizma.stockmanagement.respository.WareHouseRepository;
 import com.ylizma.stockmanagement.service.helper.DomainConversion;
+import com.ylizma.stockmanagement.util.DateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,22 +41,22 @@ public class WareHouseServiceImpl implements WareHouseService {
     }
 
     @Override
-    public ResponseEntity<Object> save(WareHouseDetails p) {
+    public ResponseEntity<Object> save(WareHouseDetails p) throws ParseException {
         WareHouse wareHouse = domainConversion.convertWareHouseDetailsToWarehouse(p);
-        wareHouse.setCreatedAt(new Date());
-        wareHouse.setLastModified(new Date());
+        wareHouse.setCreatedAt(DateFormatter.getCurrentDate());
+        wareHouse.setLastModified(DateFormatter.getCurrentDate());
         wareHouseRepository.save(wareHouse);
         return ResponseEntity.status(HttpStatus.CREATED).body(p);
     }
 
     @Override
-    public ResponseEntity<Object> update(WareHouseDetails p, Long id) {
+    public ResponseEntity<Object> update(WareHouseDetails p, Long id) throws ParseException {
         Optional<WareHouse> wareHouse = wareHouseRepository.findById(id);
         if (wareHouse.isPresent()) {
             wareHouse.get().setName(p.getName());
             wareHouse.get().setDescription(p.getDescription());
             wareHouse.get().setActive(p.getActive());
-            wareHouse.get().setLastModified(new Date());
+            wareHouse.get().setLastModified(DateFormatter.getCurrentDate());
             wareHouseRepository.save(wareHouse.get());
             return ResponseEntity.status(HttpStatus.OK).body(wareHouse);
         }

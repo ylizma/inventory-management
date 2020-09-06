@@ -10,12 +10,16 @@ import com.ylizma.stockmanagement.respository.ProductRepository;
 import com.ylizma.stockmanagement.respository.SupplierRepository;
 import com.ylizma.stockmanagement.respository.WareHouseRepository;
 import com.ylizma.stockmanagement.service.helper.DomainConversion;
+import com.ylizma.stockmanagement.util.DateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,7 +57,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<Object> save(ProductDetails p) {
+    public List<ProductDetails> findAllByWareHouseId(Long id) {
+        List<ProductDetails> productDetailsList = new ArrayList<>();
+        productRepository.findAllByWareHouseId(id)
+                .forEach(product -> productDetailsList.add(domainConversion.convertProductToDetails(product)));
+        return productDetailsList;
+    }
+
+    @Override
+    public ResponseEntity<Object> save(ProductDetails p) throws ParseException {
         Optional<Product> tProduct = productRepository.findProductByCode(p.getCode());
         Product product = domainConversion.convertProductDetailsToProduct(p);
         if (tProduct.isPresent()) {
@@ -65,15 +77,16 @@ public class ProductServiceImpl implements ProductService {
             managedSupplier.ifPresent(product::setSupplier);
             Optional<ProductGroup> managedProductGroup = productGroupRepository.findById(p.getProductGroup().getId());
             managedProductGroup.ifPresent(product::setProductGroup);
-            product.setCreatedAt(new Date());
-            product.setLastModified(new Date());
+
+            product.setCreatedAt(DateFormatter.getCurrentDate());
+            product.setLastModified(DateFormatter.getCurrentDate());
             productRepository.save(product);
             return ResponseEntity.status(HttpStatus.CREATED).body(p);
         }
     }
 
     @Override
-    public ResponseEntity<Object> update(ProductDetails p, String code) {
+    public ResponseEntity<Object> update(ProductDetails p, String code) throws ParseException {
         Optional<Product> managedProduct = productRepository.findProductByCode(code);
         Product unmanagedProduct = domainConversion.convertProductDetailsToProduct(p);
         if (managedProduct.isPresent()) {
@@ -114,7 +127,7 @@ public class ProductServiceImpl implements ProductService {
             managedProduct.get().setCode(unmanagedProduct.getCode());
             managedProduct.get().setDescription(unmanagedProduct.getDescription());
             managedProduct.get().setMinStock(unmanagedProduct.getMinStock());
-            managedProduct.get().setLastModified(new Date());
+            managedProduct.get().setLastModified(DateFormatter.getCurrentDate());
 
             productRepository.save(managedProduct.get());
 

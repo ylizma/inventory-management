@@ -4,12 +4,14 @@ import com.ylizma.stockmanagement.domain.ProductGroupDetails;
 import com.ylizma.stockmanagement.model.ProductGroup;
 import com.ylizma.stockmanagement.respository.ProductGroupRepository;
 import com.ylizma.stockmanagement.service.helper.DomainConversion;
+import com.ylizma.stockmanagement.util.DateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,11 +42,11 @@ public class ProductGroupServiceImpl implements ProductGroupService {
     }
 
     @Override
-    public ResponseEntity<Object> save(ProductGroupDetails p) {
+    public ResponseEntity<Object> save(ProductGroupDetails p) throws ParseException {
         if (!productGroupRepository.findProductGroupByCode(p.getCode()).isPresent()) {
             ProductGroup productGroup = domainConversion.convertProductGroupDetailsToProduct(p);
-            productGroup.setCreatedAt(new Date());
-            productGroup.setLastModified(new Date());
+            productGroup.setCreatedAt(DateFormatter.getCurrentDate());
+            productGroup.setLastModified(DateFormatter.getCurrentDate());
             productGroupRepository.save(productGroup);
             return ResponseEntity.status(HttpStatus.CREATED).body(productGroup);
         } else {
@@ -53,13 +55,13 @@ public class ProductGroupServiceImpl implements ProductGroupService {
     }
 
     @Override
-    public ResponseEntity<Object> update(ProductGroupDetails p, String code) {
+    public ResponseEntity<Object> update(ProductGroupDetails p, String code) throws ParseException {
         Optional<ProductGroup> productGroup = productGroupRepository.findProductGroupByCode(code);
         ProductGroup managedProduct = domainConversion.convertProductGroupDetailsToProduct(p);
         if (productGroup.isPresent()) {
             productGroup.get().setName(managedProduct.getName());
             productGroup.get().setActive(managedProduct.isActive());
-            productGroup.get().setLastModified(new Date());
+            productGroup.get().setLastModified(DateFormatter.getCurrentDate());
             productGroupRepository.save(productGroup.get());
             return ResponseEntity.status(HttpStatus.OK).body(productGroup.get());
         }

@@ -1,13 +1,7 @@
 package com.ylizma.stockmanagement.service.helper;
 
-import com.ylizma.stockmanagement.domain.ProductDetails;
-import com.ylizma.stockmanagement.domain.ProductGroupDetails;
-import com.ylizma.stockmanagement.domain.SupplierDetails;
-import com.ylizma.stockmanagement.domain.WareHouseDetails;
-import com.ylizma.stockmanagement.model.Product;
-import com.ylizma.stockmanagement.model.ProductGroup;
-import com.ylizma.stockmanagement.model.Supplier;
-import com.ylizma.stockmanagement.model.WareHouse;
+import com.ylizma.stockmanagement.domain.*;
+import com.ylizma.stockmanagement.model.*;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,7 +17,9 @@ public class DomainConversion {
                 .minStock(product.getMinStock())
                 .supplier(convertSupplierToSupplierDetails(product.getSupplier()))
                 .productGroup(convertProductGroupToProductGroupDetails(product.getProductGroup()))
-                .wareHouse(convertWareHouseToWarehousedeatils(product.getWareHouse())).build();
+                .wareHouse(convertWareHouseToWarehousedeatils(product.getWareHouse()))
+                .quantity(product.getQuantity())
+                .build();
     }
 
     public Product convertProductDetailsToProduct(ProductDetails productDetails) {
@@ -35,7 +31,9 @@ public class DomainConversion {
                 .minStock(productDetails.getMinStock())
                 .supplier(convertSupplierDetailsToSupplier(productDetails.getSupplier()))
                 .productGroup(convertProductGroupDetailsToProduct(productDetails.getProductGroup()))
-                .wareHouse(convertWareHouseDetailsToWarehouse(productDetails.getWareHouse())).build();
+                .wareHouse(convertWareHouseDetailsToWarehouse(productDetails.getWareHouse()))
+                .quantity(productDetails.getQuantity())
+                .build();
     }
 
     public ProductGroupDetails convertProductGroupToProductGroupDetails(ProductGroup productGroup) {
@@ -93,6 +91,28 @@ public class DomainConversion {
                 .active(wareHouse.getActive())
                 .description(wareHouse.getDescription())
                 .name(wareHouse.getName())
+                .build();
+    }
+
+    public StockMovementDetails convertStockMtoStockMdetails(StockMovement stockMovement) {
+        return StockMovementDetails.builder()
+                .createdAt(stockMovement.getCreatedAt())
+                .description(stockMovement.getDescription())
+                .id(stockMovement.getId())
+                .lastModified(stockMovement.getLastModified())
+                .movementType(stockMovement.getMovementType())
+                .product(stockMovement.getProduct())
+                .quantity(stockMovement.getQuantity())
+                .build();
+    }
+
+    public StockMovement convertStockMDetailstoStockM(StockMovementDetails stockMovement) {
+        return StockMovement.builder()
+                .description(stockMovement.getDescription())
+                .id(stockMovement.getId())
+                .movementType(stockMovement.getMovementType())
+                .product(stockMovement.getProduct())
+                .quantity(stockMovement.getQuantity())
                 .build();
     }
 }
