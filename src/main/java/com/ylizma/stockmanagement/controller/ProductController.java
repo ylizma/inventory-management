@@ -18,6 +18,7 @@ public class ProductController {
 
     @GetMapping("/all")
     public List<ProductDetails> getAllProducts() {
+        System.out.println("product controller");
         return productService.findAll();
     }
 
@@ -32,7 +33,7 @@ public class ProductController {
     }
 
     @PutMapping("/{code}")
-    public ResponseEntity<Object> updateProduct(@RequestBody ProductDetails product, @PathVariable String code) {
+    public ResponseEntity<Object> updateProduct(@RequestBody ProductDetails product, @PathVariable String code) throws ParseException {
         return productService.update(product, code);
     }
 

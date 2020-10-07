@@ -1,6 +1,7 @@
 package com.ylizma.stockmanagement.model;
 
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,11 +20,13 @@ public class ProductGroup extends BaseClass {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    @NotNull
     private String name;
 
+    @NotNull
     private boolean active;
 
+    @NotNull
     @Column(unique = true)
     private String code;
 }

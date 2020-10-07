@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+
 @RestController
 @RequestMapping("/suppliers")
 public class SupplierController {
@@ -24,12 +26,12 @@ public class SupplierController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> saveSupplier(@RequestBody SupplierDetails supplier){
+    public ResponseEntity<Object> saveSupplier(@RequestBody SupplierDetails supplier) throws ParseException {
         return supplierService.save(supplier);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateSupplier(@RequestBody SupplierDetails supplier,@PathVariable Long id){
+    public ResponseEntity<Object> updateSupplier(@RequestBody SupplierDetails supplier,@PathVariable Long id) throws ParseException {
         return supplierService.update(supplier,id);
     }
 

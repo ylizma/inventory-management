@@ -36,7 +36,7 @@ public class ProductGroupServiceImpl implements ProductGroupService {
     @Override
     public List<ProductGroupDetails> findAll() {
         List<ProductGroupDetails> groupDetailsList = new ArrayList<>();
-        productGroupRepository.findAll().forEach(productGroup ->
+        productGroupRepository.findAllByOrderByCreatedAtDesc().forEach(productGroup ->
                 groupDetailsList.add(domainConversion.convertProductGroupToProductGroupDetails(productGroup)));
         return groupDetailsList;
     }

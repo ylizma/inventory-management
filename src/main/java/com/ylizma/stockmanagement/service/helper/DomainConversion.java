@@ -19,6 +19,8 @@ public class DomainConversion {
                 .productGroup(convertProductGroupToProductGroupDetails(product.getProductGroup()))
                 .wareHouse(convertWareHouseToWarehousedeatils(product.getWareHouse()))
                 .quantity(product.getQuantity())
+                .createdAt(product.getCreatedAt())
+                .lastModified(product.getLastModified())
                 .build();
     }
 
@@ -42,6 +44,8 @@ public class DomainConversion {
                 .code(productGroup.getCode())
                 .name(productGroup.getName())
                 .id(productGroup.getId())
+                .createdAt(productGroup.getCreatedAt())
+                .lastModified(productGroup.getLastModified())
                 .build();
     }
 
@@ -63,6 +67,8 @@ public class DomainConversion {
                 .fax(supplier.getFax())
                 .phone(supplier.getPhone())
                 .id(supplier.getId())
+                .createdAt(supplier.getCreatedAt())
+                .lastModified(supplier.getLastModified())
                 .build();
     }
 
@@ -83,12 +89,16 @@ public class DomainConversion {
                 .active(wareHouse.getActive())
                 .description(wareHouse.getDescription())
                 .name(wareHouse.getName())
-                .id(wareHouse.getId()).build();
+                .id(wareHouse.getId())
+                .createdAt(wareHouse.getCreatedAt())
+                .lastModified(wareHouse.getLastModified())
+                .build();
     }
 
     public WareHouse convertWareHouseDetailsToWarehouse(WareHouseDetails wareHouse) {
         return WareHouse.builder()
                 .active(wareHouse.getActive())
+                .id(wareHouse.getId())
                 .description(wareHouse.getDescription())
                 .name(wareHouse.getName())
                 .build();
@@ -97,9 +107,9 @@ public class DomainConversion {
     public StockMovementDetails convertStockMtoStockMdetails(StockMovement stockMovement) {
         return StockMovementDetails.builder()
                 .createdAt(stockMovement.getCreatedAt())
+                .lastModified(stockMovement.getLastModified())
                 .description(stockMovement.getDescription())
                 .id(stockMovement.getId())
-                .lastModified(stockMovement.getLastModified())
                 .movementType(stockMovement.getMovementType())
                 .product(stockMovement.getProduct())
                 .quantity(stockMovement.getQuantity())

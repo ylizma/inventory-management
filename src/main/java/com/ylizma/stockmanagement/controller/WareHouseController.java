@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -26,12 +27,12 @@ public class WareHouseController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> saveWareHouse(@RequestBody WareHouseDetails wareHouse) {
+    public ResponseEntity<Object> saveWareHouse(@RequestBody WareHouseDetails wareHouse) throws ParseException {
         return wareHouseService.save(wareHouse);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateWareHouse(@RequestBody WareHouseDetails wareHouse, @PathVariable Long id) {
+    public ResponseEntity<Object> updateWareHouse(@RequestBody WareHouseDetails wareHouse, @PathVariable Long id) throws ParseException {
         return wareHouseService.update(wareHouse, id);
     }
 

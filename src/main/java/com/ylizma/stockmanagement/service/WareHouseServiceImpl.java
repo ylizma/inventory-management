@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class WareHouseServiceImpl implements WareHouseService {
 
     @Autowired
@@ -46,7 +48,7 @@ public class WareHouseServiceImpl implements WareHouseService {
         wareHouse.setCreatedAt(DateFormatter.getCurrentDate());
         wareHouse.setLastModified(DateFormatter.getCurrentDate());
         wareHouseRepository.save(wareHouse);
-        return ResponseEntity.status(HttpStatus.CREATED).body(p);
+        return ResponseEntity.status(HttpStatus.CREATED).body(wareHouse);
     }
 
     @Override

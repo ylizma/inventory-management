@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+
 @RestController
 @RequestMapping("/productgroups")
+@CrossOrigin(origins = "http://localhost:8081")
 public class ProductGroupController {
 
     @Autowired
@@ -19,7 +22,7 @@ public class ProductGroupController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> saveProductGroup(@RequestBody ProductGroupDetails productGroup) {
+    public ResponseEntity<Object> saveProductGroup(@RequestBody ProductGroupDetails productGroup) throws ParseException {
         return productGroupService.save(productGroup);
     }
 
@@ -29,12 +32,13 @@ public class ProductGroupController {
     }
 
     @PutMapping("/{code}")
-    public ResponseEntity<Object> updateProductGroup(@RequestBody ProductGroupDetails product, @PathVariable String code) {
+    public ResponseEntity<Object> updateProductGroup(@RequestBody ProductGroupDetails product, @PathVariable String code) throws ParseException {
         return productGroupService.update(product, code);
     }
 
     @DeleteMapping("/{code}")
     public ResponseEntity<Object> deleteProductGroup(@PathVariable String code) {
+        System.out.println(code);
         return productGroupService.delete(code);
     }
 }

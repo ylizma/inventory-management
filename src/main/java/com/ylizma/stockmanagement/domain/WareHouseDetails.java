@@ -5,17 +5,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class WareHouseDetails {
 
-    private Long id;
+     Long id;
 
-    private String name;
+     String name;
 
-    private String description;
+     String description;
 
-    private Boolean active;
+     Boolean active;
+
+     Date createdAt;
+
+     Date lastModified;
 }

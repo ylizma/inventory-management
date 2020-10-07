@@ -12,9 +12,9 @@ import java.util.Date;
 @MappedSuperclass
 public class BaseClass {
 
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastModified;
 }
