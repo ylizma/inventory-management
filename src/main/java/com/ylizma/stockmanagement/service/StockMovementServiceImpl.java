@@ -9,12 +9,15 @@ import com.ylizma.stockmanagement.respository.StockMovementRepository;
 import com.ylizma.stockmanagement.service.helper.DomainConversion;
 import com.ylizma.stockmanagement.util.DateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,11 +25,11 @@ import java.util.Optional;
 public class StockMovementServiceImpl implements StockMovementService {
 
     @Autowired
-    StockMovementRepository stockMovementRepository;
+    private StockMovementRepository stockMovementRepository;
     @Autowired
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
     @Autowired
-    DomainConversion domainConversion;
+    private DomainConversion domainConversion;
 
     @Override
     public StockMovementDetails findById(Long id) {
@@ -34,13 +37,8 @@ public class StockMovementServiceImpl implements StockMovementService {
         return stockM.map(stockMovement -> domainConversion.convertStockMtoStockMdetails(stockMovement)).orElse(null);
     }
 
-    @Override
-    public List<StockMovementDetails> findAll() {
-        List<StockMovementDetails> stockMovementDetailsList = new ArrayList<>();
-        stockMovementRepository.findAll()
-                .forEach(stockMovement -> stockMovementDetailsList
-                        .add(domainConversion.convertStockMtoStockMdetails(stockMovement)));
-        return stockMovementDetailsList;
+    public Page<StockMovement> findAll(int page, int size) {
+        return stockMovementRepository.findAll(PageRequest.of(page, size, Sort.by("createdAt").descending()));
     }
 
     @Override
@@ -77,5 +75,18 @@ public class StockMovementServiceImpl implements StockMovementService {
         } else {
             return ResponseEntity.badRequest().body("Stock movement not found !");
         }
+    }
+
+    @Override
+    public List<?> getProductsMovement(Long id) {
+        if (id == null) {
+            System.out.println("is null");
+            Product p = stockMovementRepository.getRandomProduct();
+            System.out.println(p.getId());
+            List<?> tes = stockMovementRepository.findProductsMovement(p.getId());
+            System.out.println(Arrays.toString(tes.toArray()));
+            return tes;
+        }
+        return stockMovementRepository.findProductsMovement(id);
     }
 }

@@ -6,6 +6,7 @@ import com.ylizma.stockmanagement.respository.SupplierRepository;
 import com.ylizma.stockmanagement.service.helper.DomainConversion;
 import com.ylizma.stockmanagement.util.DateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,9 +24,9 @@ import java.util.Optional;
 public class SupplierServiceImpl implements SupplierService {
 
     @Autowired
-    SupplierRepository supplierRepository;
+    private SupplierRepository supplierRepository;
     @Autowired
-    DomainConversion domainConversion;
+    private DomainConversion domainConversion;
 
     @Override
     public SupplierDetails findById(Long id) {
@@ -36,7 +37,7 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     public List<SupplierDetails> findAll() {
         List<SupplierDetails> supplierList = new ArrayList<>();
-        supplierRepository.findAll().forEach(supplier ->
+        supplierRepository.findAll(Sort.by("createdAt").descending()).forEach(supplier ->
                 supplierList.add(domainConversion.convertSupplierToSupplierDetails(supplier)));
         return supplierList;
     }

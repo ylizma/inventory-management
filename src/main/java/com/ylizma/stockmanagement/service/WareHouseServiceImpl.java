@@ -6,6 +6,7 @@ import com.ylizma.stockmanagement.respository.WareHouseRepository;
 import com.ylizma.stockmanagement.service.helper.DomainConversion;
 import com.ylizma.stockmanagement.util.DateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +29,7 @@ public class WareHouseServiceImpl implements WareHouseService {
     @Override
     public List<WareHouseDetails> findAll() {
         List<WareHouseDetails> wareHouseDetailsList = new ArrayList<>();
-        wareHouseRepository.findAll()
+        wareHouseRepository.findAll(Sort.by("createdAt").descending())
                 .forEach(wareHouse -> wareHouseDetailsList.add(domainConversion.convertWareHouseToWarehousedeatils(wareHouse)));
         return wareHouseDetailsList;
     }
@@ -74,5 +74,10 @@ public class WareHouseServiceImpl implements WareHouseService {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Warehouse not found !");
         }
+    }
+
+    @Override
+    public List<?> numberOfProductsByWareHouse() {
+        return wareHouseRepository.numberOfProductsByWareHouse();
     }
 }

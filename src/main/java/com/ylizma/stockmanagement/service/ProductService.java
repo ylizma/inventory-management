@@ -1,6 +1,8 @@
 package com.ylizma.stockmanagement.service;
 
 import com.ylizma.stockmanagement.domain.ProductDetails;
+import com.ylizma.stockmanagement.model.Product;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 
 import java.text.ParseException;
@@ -10,7 +12,7 @@ public interface ProductService {
 
     ProductDetails findByCode(String code);
 
-    List<ProductDetails> findAll();
+    Page<Product> findAll(int page,int size);
 
     List<ProductDetails> findAllByWareHouseId(Long id);
 

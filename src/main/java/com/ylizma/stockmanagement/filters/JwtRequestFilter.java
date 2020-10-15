@@ -31,8 +31,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
         httpServletResponse.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
-        if ("DELETE".equals(httpServletRequest.getMethod())) {
+        if ("OPTIONS".equals(httpServletRequest.getMethod())) {
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+            System.out.println("ok");
         }
         final String authorizationHeader = httpServletRequest.getHeader("Authorization");
         String username = null;

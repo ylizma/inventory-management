@@ -29,14 +29,12 @@ public class Product extends BaseClass {
     @Column(unique = true)
     private String code;
 
-    private Integer minStock;
-
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private WareHouse wareHouse;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ProductGroup productGroup;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Supplier supplier;
 }

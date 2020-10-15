@@ -22,10 +22,10 @@ import java.util.Optional;
 public class ProductGroupServiceImpl implements ProductGroupService {
 
     @Autowired
-    ProductGroupRepository productGroupRepository;
+    private ProductGroupRepository productGroupRepository;
 
     @Autowired
-    DomainConversion domainConversion;
+    private DomainConversion domainConversion;
 
     @Override
     public ProductGroupDetails findByCode(String code) {

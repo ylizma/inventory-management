@@ -37,7 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-        http.cors().configurationSource(httpServletRequest -> new CorsConfiguration().applyPermitDefaultValues());
+        http.cors();
     }
 
     @Override

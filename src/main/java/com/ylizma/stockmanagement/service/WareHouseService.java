@@ -17,4 +17,6 @@ public interface WareHouseService {
     ResponseEntity<Object> update(WareHouseDetails p, Long id) throws ParseException;
 
     ResponseEntity<Object> delete(Long id);
+
+    List<?> numberOfProductsByWareHouse();
 }

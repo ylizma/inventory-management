@@ -9,7 +9,7 @@ public  class DateFormatter {
 
     public static Date getCurrentDate() throws ParseException {
         Date currentDate = new Date();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String managedDate = df.format(currentDate);
         return df.parse(managedDate);
     }

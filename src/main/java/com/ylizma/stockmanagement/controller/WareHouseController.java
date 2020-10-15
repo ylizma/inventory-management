@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/warehouses")
+@CrossOrigin(origins = "http://localhost:8081")
 public class WareHouseController {
 
     @Autowired
@@ -41,4 +42,8 @@ public class WareHouseController {
         return wareHouseService.delete(id);
     }
 
+    @GetMapping("/chart")
+    public List<?> numberOfProductsByWareHouse(){
+        return wareHouseService.numberOfProductsByWareHouse();
+    }
 }

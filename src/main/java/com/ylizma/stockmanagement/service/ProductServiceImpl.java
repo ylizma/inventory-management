@@ -12,16 +12,16 @@ import com.ylizma.stockmanagement.respository.WareHouseRepository;
 import com.ylizma.stockmanagement.service.helper.DomainConversion;
 import com.ylizma.stockmanagement.util.DateFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,13 +30,13 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
     @Autowired
-    WareHouseRepository wareHouseRepository;
+    private WareHouseRepository wareHouseRepository;
     @Autowired
-    SupplierRepository supplierRepository;
+    private SupplierRepository supplierRepository;
     @Autowired
-    ProductGroupRepository productGroupRepository;
+    private ProductGroupRepository productGroupRepository;
 
     @Autowired
     DomainConversion domainConversion;
@@ -48,12 +48,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDetails> findAll() {
-        List<ProductDetails> productList = new ArrayList<>();
-        productRepository.findAll()
-                .forEach(product ->
-                        productList.add(domainConversion.convertProductToDetails(product)));
-        return productList;
+    public Page<Product> findAll(int page, int size) {
+        return productRepository.findAll(PageRequest.of(page, size, Sort.by("createdAt").descending()));
     }
 
     @Override
@@ -126,7 +122,6 @@ public class ProductServiceImpl implements ProductService {
             }
             managedProduct.get().setCode(unmanagedProduct.getCode());
             managedProduct.get().setDescription(unmanagedProduct.getDescription());
-            managedProduct.get().setMinStock(unmanagedProduct.getMinStock());
             managedProduct.get().setLastModified(DateFormatter.getCurrentDate());
 
             productRepository.save(managedProduct.get());

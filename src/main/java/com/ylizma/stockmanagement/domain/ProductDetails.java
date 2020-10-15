@@ -26,8 +26,6 @@ public class ProductDetails {
 
     Integer quantity;
 
-    Integer minStock;
-
     WareHouseDetails wareHouse;
 
     ProductGroupDetails productGroup;
