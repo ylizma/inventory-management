@@ -53,7 +53,7 @@ public class StockMovementServiceImpl implements StockMovementService {
                     product.get().setQuantity(product.get().getQuantity() - stockMovement.getQuantity());
                     stockMovement.setProduct(product.get());
                 }
-            } else {
+            } else if ((stockMovement.getMovementType().equals(MovementType.INCOMING))) {
                 product.get().setQuantity(product.get().getQuantity() + stockMovement.getQuantity());
                 stockMovement.setProduct(product.get());
             }
@@ -78,11 +78,11 @@ public class StockMovementServiceImpl implements StockMovementService {
     }
 
     @Override
-    public List<?> getProductsMovement(Long id) {
+    public List<  ?> getProductsMovement(Long id) {
         if (id == null) {
             System.out.println("is null");
             Product p = stockMovementRepository.getRandomProduct();
-            System.out.println(p.getId());
+            System.out.println(p);
             List<?> tes = stockMovementRepository.findProductsMovement(p.getId());
             System.out.println(Arrays.toString(tes.toArray()));
             return tes;

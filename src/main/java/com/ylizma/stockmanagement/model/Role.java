@@ -6,19 +6,15 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-public class User {
-    @Id
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Role {
+
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
     private Long id;
-
-    private String userName;
-
-    private String password;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Role role;
+    @Column
+    private String name;
 }

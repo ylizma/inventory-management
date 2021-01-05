@@ -10,7 +10,7 @@ import java.text.ParseException;
 
 @RestController
 @RequestMapping("/suppliers")
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:8080")
 public class SupplierController {
 
     @Autowired
