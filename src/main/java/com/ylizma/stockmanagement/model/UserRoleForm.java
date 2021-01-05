@@ -1,4 +1,4 @@
-package com.ylizma.stockmanagement.domain;
+package com.ylizma.stockmanagement.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,10 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDetails {
+public class UserRoleForm {
 
     private String username;
-
-    private String password;
+    private String rolename;
 
 }

@@ -3,18 +3,22 @@ package com.ylizma.stockmanagement.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
-@Data
 @AllArgsConstructor
+@Data
+@ToString
 @NoArgsConstructor
-public class Role {
+public class RoleApp {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
     private String name;
+    @OneToMany
+    private Collection<UserApp> users;
 }

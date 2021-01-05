@@ -30,12 +30,12 @@ public class AuthenticationController {
     public ResponseEntity<?> createAuthenticationToken(@RequestBody UserDetails userDetails) throws Exception {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(userDetails.getUserName(), userDetails.getPassword())
+                    new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword())
             );
         } catch (Exception e) {
             throw new Exception(e);
         }
-        final org.springframework.security.core.userdetails.UserDetails user = userDetailsService.loadUserByUsername(userDetails.getUserName());
+        final org.springframework.security.core.userdetails.UserDetails user = userDetailsService.loadUserByUsername(userDetails.getUsername());
         final String jwt = jwtUtil.generateToken(user);
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
