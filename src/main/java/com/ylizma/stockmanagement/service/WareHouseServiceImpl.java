@@ -58,6 +58,7 @@ public class WareHouseServiceImpl implements WareHouseService {
             wareHouse.get().setName(p.getName());
             wareHouse.get().setDescription(p.getDescription());
             wareHouse.get().setActive(p.getActive());
+            wareHouse.get().setCity(p.getCity());
             wareHouse.get().setLastModified(DateFormatter.getCurrentDate());
             wareHouseRepository.save(wareHouse.get());
             return ResponseEntity.status(HttpStatus.OK).body(wareHouse);

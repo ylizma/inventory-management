@@ -21,6 +21,8 @@ public class WareHouseDetails {
 
      Boolean active;
 
+     String city;
+
      Date createdAt;
 
      Date lastModified;

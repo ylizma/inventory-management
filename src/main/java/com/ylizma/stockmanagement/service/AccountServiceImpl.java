@@ -1,6 +1,7 @@
 package com.ylizma.stockmanagement.service;
 
 
+import com.ylizma.stockmanagement.domain.UserRoleForm;
 import com.ylizma.stockmanagement.model.RoleApp;
 import com.ylizma.stockmanagement.model.UserApp;
 import com.ylizma.stockmanagement.respository.RoleAppRepository;
@@ -37,11 +38,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void addRoleToUser(String username, String roleName) {
-        RoleApp role = roleAppRepository.findByName(roleName);
-        UserApp user = userAppRepository.findUserByUsername(username).get();
+    public UserApp addRoleToUser(UserRoleForm userApp) {
+        RoleApp role = roleAppRepository.findByName(userApp.getRole());
+        UserApp user = addNewUser(userApp.getUser());
         user.setRole(role);
-        userAppRepository.save(user);
+        return userAppRepository.save(user);
     }
 
     @Override
@@ -57,5 +58,17 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public List<RoleApp> allRoles() {
         return roleAppRepository.findAll();
+    }
+
+    @Override
+    public UserApp updateUser(UserRoleForm userRoleForm, Long id) {
+        UserApp user = userAppRepository.findById(id).get();
+        user.setRole(roleAppRepository.findByName(userRoleForm.getRole()));
+        user.setUsername(userRoleForm.getUser().getUsername());
+        System.out.println("====================>"+userRoleForm.getUser().getPassword());
+        if (userRoleForm.getUser().getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(userRoleForm.getUser().getPassword()));
+        }
+        return userAppRepository.save(user);
     }
 }

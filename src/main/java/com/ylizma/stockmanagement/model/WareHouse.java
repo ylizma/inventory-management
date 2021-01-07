@@ -26,4 +26,6 @@ public class WareHouse extends BaseClass {
 
     private Boolean active;
 
+    private String city;
+
 }

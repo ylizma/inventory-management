@@ -88,6 +88,7 @@ public class DomainConversion {
                 .description(wareHouse.getDescription())
                 .name(wareHouse.getName())
                 .id(wareHouse.getId())
+                .city(wareHouse.getCity())
                 .createdAt(wareHouse.getCreatedAt())
                 .lastModified(wareHouse.getLastModified())
                 .build();
@@ -99,6 +100,7 @@ public class DomainConversion {
                 .id(wareHouse.getId())
                 .description(wareHouse.getDescription())
                 .name(wareHouse.getName())
+                .city(wareHouse.getCity())
                 .build();
     }
 

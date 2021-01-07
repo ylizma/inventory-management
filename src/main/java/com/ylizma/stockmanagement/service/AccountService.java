@@ -1,5 +1,6 @@
 package com.ylizma.stockmanagement.service;
 
+import com.ylizma.stockmanagement.domain.UserRoleForm;
 import com.ylizma.stockmanagement.model.RoleApp;
 import com.ylizma.stockmanagement.model.UserApp;
 
@@ -11,11 +12,13 @@ public interface AccountService {
 
     RoleApp addNewRole(RoleApp role);
 
-    void addRoleToUser(String username, String roleName);
+    UserApp addRoleToUser(UserRoleForm userRoleForm);
 
     UserApp loadUserByUsername(String username);
 
     List<UserApp> allUsers();
 
     List<RoleApp> allRoles();
+
+    UserApp updateUser(UserRoleForm userRoleForm, Long id);
 }

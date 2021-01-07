@@ -1,13 +1,15 @@
 package com.ylizma.stockmanagement.controller;
 
 
+import com.ylizma.stockmanagement.domain.UserRoleForm;
 import com.ylizma.stockmanagement.model.RoleApp;
 import com.ylizma.stockmanagement.model.UserApp;
-import com.ylizma.stockmanagement.model.UserRoleForm;
 import com.ylizma.stockmanagement.service.AccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import javax.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/accounts")
@@ -20,13 +22,6 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @PostMapping("/users")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Object> addNewUser(@RequestBody UserApp user) {
-        UserApp newUser = accountService.addNewUser(user);
-        return ResponseEntity.ok(newUser);
-    }
-
     @PostMapping("/roles")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> addNewRole(@RequestBody RoleApp role) {
@@ -34,11 +29,17 @@ public class AccountController {
         return ResponseEntity.ok(roleApp);
     }
 
-    @PostMapping("/users/role")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/users")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> addRoleToUser(@RequestBody UserRoleForm userRoleForm) {
-        accountService.addRoleToUser(userRoleForm.getUsername(), userRoleForm.getRolename());
-        return ResponseEntity.ok("added !!");
+
+        return ResponseEntity.ok(accountService.addRoleToUser(userRoleForm));
+    }
+
+    @PutMapping("/users/{id}")
+//    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Object> updateUser(@RequestBody UserRoleForm userRoleForm, @PathVariable Long id) {
+        return ResponseEntity.ok(accountService.updateUser(userRoleForm,id));
     }
 
     @GetMapping("/users")

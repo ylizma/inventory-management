@@ -1,5 +1,6 @@
-package com.ylizma.stockmanagement.model;
+package com.ylizma.stockmanagement.domain;
 
+import com.ylizma.stockmanagement.model.UserApp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserRoleForm {
 
-    private String username;
-    private String rolename;
-
+    private UserApp user;
+    private String role;
 }
